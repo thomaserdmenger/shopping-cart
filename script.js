@@ -1,3 +1,3 @@
-import { getData } from "./store.js";
+import { setupStore } from "./store.js";
 
-// getData();
+setupStore();
