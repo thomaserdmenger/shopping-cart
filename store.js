@@ -6,8 +6,7 @@ const dataStoreContainer = document.querySelector("[data-store-container]");
 
 const IMG_SOURCE = "https://dummyimage.com/420x260";
 
-// src="https://dummyimage.com/420x260/F00/F00">
-
+// REFACTORED SOLUTION
 export function setupStore() {
   // items.forEach(renderStoreItem); Same as:
   items.forEach((item) => renderStoreItem(item));
