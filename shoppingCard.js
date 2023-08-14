@@ -1,5 +1,6 @@
 import items from "./items.json";
 import formatCurrency from "./utilities/formatCurrency.js";
+import addGlobalEventListener from "./utilities/addGlobalEventListener.js";
 
 const cartButton = document.querySelector("[data-cart-button]");
 const cartItemsWrapper = document.querySelector("[data-cart-items-wrapper]");
@@ -12,32 +13,24 @@ const cartTotal = document.querySelector("[data-cart-total]");
 const cart = document.querySelector("[data-cart]");
 
 export function setupShoppingCard() {
+  addGlobalEventListener("click", "[data-remove-from-cart-button]", (e) => {
+    const id = parseInt(e.target.closest("[data-item]").dataset.itemId);
+    removeCart(id);
+  });
   renderCart();
 }
 
-// Remove items from cart
-// Show/hide cart button when it has no items or when it goes from 0 to 1 item
-// Persist multiple pages
-
-// Show/hide cart when clicked
 cartButton.addEventListener("click", () => {
   cartItemsWrapper.classList.toggle("invisible");
 });
 
-// Add items to cart
-// Handle the click event for adding
-// Handle multiple of the same item in the card
-// Calculate an accurate total
-
 export function addToCart(id) {
   const existingItem = shoppingCart.find((entry) => entry.id === id);
-
   if (existingItem) {
     existingItem.quantity++;
   } else {
     shoppingCart.push({ id: id, quantity: 1 });
   }
-
   renderCart();
 }
 
@@ -57,6 +50,13 @@ function hideCart() {
 
 function showCart() {
   cart.classList.remove("invisible");
+}
+
+function removeCart(id) {
+  const existingItem = shoppingCart.find((entry) => entry.id === id);
+  if (existingItem == null) return;
+  shoppingCart = shoppingCart.filter((entry) => entry.id !== id);
+  renderCart();
 }
 
 function renderCartItems() {

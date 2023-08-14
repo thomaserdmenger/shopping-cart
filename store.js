@@ -1,6 +1,7 @@
 import items from "./items.json";
 import formatCurrency from "./utilities/formatCurrency.js";
 import { addToCart } from "./shoppingCard.js";
+import addGobalEventListener from "./utilities/addGlobalEventListener.js";
 
 const storeItemTemplate = document.querySelector("#store-item-template");
 const storeContainer = document.querySelector("[data-store-container]");
@@ -10,11 +11,9 @@ const IMG_SOURCE = "https://dummyimage.com/420x260";
 
 // REFACTORED SOLUTION
 export function setupStore() {
-  document.addEventListener("click", (e) => {
-    if (e.target.matches("[data-add-to-cart-button]")) {
-      const id = e.target.closest("[data-store-item]").dataset.itemId;
-      addToCart(parseInt(id));
-    }
+  addGobalEventListener("click", "[data-add-to-cart-button]", (e) => {
+    const id = e.target.closest("[data-store-item]").dataset.itemId;
+    addToCart(parseInt(id));
   });
 
   // items.forEach(renderStoreItem); Same as:
