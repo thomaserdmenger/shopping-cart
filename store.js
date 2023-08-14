@@ -11,6 +11,7 @@ const IMG_SOURCE = "https://dummyimage.com/420x260";
 
 // REFACTORED SOLUTION
 export function setupStore() {
+  if (storeContainer == null) return;
   addGobalEventListener("click", "[data-add-to-cart-button]", (e) => {
     const id = e.target.closest("[data-store-item]").dataset.itemId;
     addToCart(parseInt(id));
