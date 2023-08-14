@@ -1,13 +1,22 @@
 import items from "./items.json";
 import formatCurrency from "./utilities/formatCurrency.js";
+import { addToCart } from "./shoppingCard.js";
 
 const storeItemTemplate = document.querySelector("#store-item-template");
-const dataStoreContainer = document.querySelector("[data-store-container]");
+const storeContainer = document.querySelector("[data-store-container]");
+const addToCartButton = document.querySelectorAll("[data-add-to-cart-button]");
 
 const IMG_SOURCE = "https://dummyimage.com/420x260";
 
 // REFACTORED SOLUTION
 export function setupStore() {
+  document.addEventListener("click", (e) => {
+    if (e.target.matches("[data-add-to-cart-button]")) {
+      const id = e.target.closest("[data-store-item]").dataset.itemId;
+      addToCart(parseInt(id));
+    }
+  });
+
   // items.forEach(renderStoreItem); Same as:
   items.forEach((item) => renderStoreItem(item));
 }
@@ -33,7 +42,7 @@ function renderStoreItem(item) {
     `${IMG_SOURCE}/${item.imageColor}/${item.imageColor}`
   );
 
-  dataStoreContainer.append(container);
+  storeContainer.append(container);
 }
 
 // OWN SOlUTION
