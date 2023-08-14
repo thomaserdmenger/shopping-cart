@@ -8,6 +8,7 @@ const IMG_SOURCE = "https://dummyimage.com/210x130";
 const cartItemTemplate = document.querySelector("#cart-item-template");
 const cartItemContainer = document.querySelector("[data-cart-items]");
 const cartQuantity = document.querySelector("[data-cart-quantity]");
+const cartTotal = document.querySelector("[data-cart-total]");
 
 export function setupShoppingCard() {}
 
@@ -38,10 +39,16 @@ export function addToCart(id) {
 }
 
 function renderCart() {
-  cartItemContainer.innerHTML = "";
-
   cartQuantity.textContent = shoppingCart.length;
 
+  const totalCents = shoppingCart.reduce((sum, entry) => {
+    const item = items.find((i) => entry.id === i.id);
+    return sum + item.priceCents * entry.quantity;
+  }, 0);
+
+  cartTotal.textContent = formatCurrency(totalCents / 100);
+
+  cartItemContainer.innerHTML = "";
   shoppingCart.forEach((entry) => {
     const item = items.find((i) => entry.id === i.id);
 
